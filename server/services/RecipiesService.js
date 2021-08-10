@@ -3,7 +3,7 @@ import { BadRequest } from '../utils/Errors'
 
 class RecipiesService {
   async find(query = {}) {
-    const recipies = await dbContext.Recipies.find(query)
+    const recipies = await dbContext.Recipies.find(query).populate('ingredients')
     return recipies
   }
 

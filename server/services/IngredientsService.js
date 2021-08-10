@@ -27,8 +27,10 @@ class IngredientsService {
     return updated
   }
 
-  async delete(body) {
-    return await dbContext.Ingredients.findByIdAndRemove(body.id)
+  async delete(id) {
+    await dbContext.Ingredients.findByIdAndRemove(id)
+    // TODO[epic=many-to-many array style]
+    await dbContext.Recipies.updateMany({ ingredients: id }, { $pull: { ingredients: id } })
   }
 }
 

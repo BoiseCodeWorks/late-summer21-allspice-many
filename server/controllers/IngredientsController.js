@@ -7,8 +7,8 @@ export class IngredientsController extends BaseController {
     this.router
       .get('', this.getAll)
       .post('', this.create)
-      .put('', this.edit)
-      .delete('', this.delete)
+      .put('/:id', this.edit)
+      .delete('/:id', this.delete)
   }
 
   async getAll(req, res, next) {
@@ -31,6 +31,7 @@ export class IngredientsController extends BaseController {
 
   async edit(req, res, next) {
     try {
+      req.body.id = req.params.id
       const ingredient = await ingredientsService.update(req.body)
       res.send(ingredient)
     } catch (error) {
@@ -40,7 +41,7 @@ export class IngredientsController extends BaseController {
 
   async delete(req, res, next) {
     try {
-      const ingredient = await ingredientsService.delete(req.body)
+      const ingredient = await ingredientsService.delete(req.params.id)
       res.send(ingredient)
     } catch (error) {
       next(error)
